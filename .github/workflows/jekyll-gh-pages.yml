@@ -9,21 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          
-      - name: Install dependencies
-        run: npm install
-        
-      - name: Build project
-        run: npm run build
-        
+
+      # 直接部署 dist 目录（跳过安装和构建步骤）
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          force_orphan: true  # 强制完全覆盖旧部署
+          publish_dir: ./dist  # 直接发布 dist 目录内容
+          force_orphan: true    # 强制覆盖旧部署
+          keep_files: false     # 不保留任何旧文件
